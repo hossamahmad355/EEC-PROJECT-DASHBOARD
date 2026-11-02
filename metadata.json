@@ -1,0 +1,6 @@
+{
+  "name": "لوحة متابعة المشروعات - الشركة المصرية الهندسية للمقاولات",
+  "description": "نظام إدارة ومتابعة المشروعات الهندسية والمقاولات متكامل فرونت إند وباك إند مع Node.js و React و MongoDB",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
