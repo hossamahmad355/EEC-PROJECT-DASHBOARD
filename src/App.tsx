@@ -22,6 +22,7 @@ import { SectionDataModal } from './components/modals/SectionDataModal';
 import { ProjectCalendarModal } from './components/ProjectCalendarModal';
 import { ProjectChatModal } from './components/modals/ProjectChatModal';
 import { exportProjectsToPdf, exportSiteReportsToPdf } from './utils/pdfExport';
+import { translations, Language } from './utils/translations';
 
 import {
   Project,
@@ -85,6 +86,7 @@ export default function App() {
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
 
   // Filter and search state
+  const [lang, setLang] = useState<Language>('ar');
   const [activeFilter, setActiveFilter] = useState<string>('الكل');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -344,7 +346,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#eef5fc] text-slate-800 p-3 sm:p-4 md:p-6 flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+    <div dir={lang === 'ar' ? 'rtl' : 'ltr'} className="min-h-screen bg-[#eef5fc] text-slate-800 p-3 sm:p-4 md:p-6 flex flex-col justify-between selection:bg-blue-600 selection:text-white">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 left-6 z-50 bg-slate-900 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 animate-in fade-in slide-in-from-bottom-4 flex items-center gap-2">
@@ -361,6 +363,8 @@ export default function App() {
           onOpenCalendarModal={() => setIsCalendarOpen(true)}
           onSearchChange={setSearchQuery}
           searchQuery={searchQuery}
+          lang={lang}
+          onToggleLang={() => setLang(prev => prev === 'ar' ? 'en' : 'ar')}
         />
 
         {/* 2. Top 5 KPI Cards Row */}
@@ -567,25 +571,29 @@ export default function App() {
         documents={documents}
       />
 
-      <ProjectCalendarModal
-        isOpen={isCalendarOpen}
-        onClose={() => setIsCalendarOpen(false)}
-        projects={projects}
-        events={calendarEvents}
-        onAddEvent={handleAddCalendarEvent}
-        onToggleEvent={handleToggleCalendarEvent}
-        onDeleteEvent={handleDeleteCalendarEvent}
-      />
+      {isCalendarOpen && (
+        <ProjectCalendarModal
+          isOpen={isCalendarOpen}
+          onClose={() => setIsCalendarOpen(false)}
+          projects={projects}
+          events={calendarEvents}
+          onAddEvent={handleAddCalendarEvent}
+          onToggleEvent={handleToggleCalendarEvent}
+          onDeleteEvent={handleDeleteCalendarEvent}
+        />
+      )}
 
-      <ProjectChatModal
-        isOpen={!!chatProject}
-        onClose={() => setChatProject(null)}
-        project={chatProject}
-        currentUser={{ name: 'م. حسام أحمد', role: 'مدير عام المشروعات' }}
-        onNewMessageNotify={msg => {
-          showToast(`💬 رسالة جديدة في [${msg.projectId}]: ${msg.message.substring(0, 30)}...`);
-        }}
-      />
+      {chatProject && (
+        <ProjectChatModal
+          isOpen={!!chatProject}
+          onClose={() => setChatProject(null)}
+          project={chatProject}
+          currentUser={{ name: 'م. حسام أحمد', role: 'مدير عام المشروعات' }}
+          onNewMessageNotify={msg => {
+            showToast(`💬 رسالة جديدة في [${msg.projectId}]: ${msg.message.substring(0, 30)}...`);
+          }}
+        />
+      )}
     </div>
   );
 }

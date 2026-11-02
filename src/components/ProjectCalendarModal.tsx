@@ -53,8 +53,6 @@ export const ProjectCalendarModal: React.FC<ProjectCalendarModalProps> = ({
   const [newDesc, setNewDesc] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!isOpen) return null;
-
   const monthNamesArabic = [
     'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
     'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'

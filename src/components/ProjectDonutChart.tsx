@@ -197,25 +197,25 @@ export const ProjectDonutChart: React.FC<ProjectDonutChartProps> = ({
                 onClick={() => onSelectCategory?.(mappedStatus)}
                 onMouseEnter={() => setHoveredSegment(seg.id)}
                 onMouseLeave={() => setHoveredSegment(null)}
-                className={`flex items-center justify-between text-xs py-1 px-1.5 rounded-lg cursor-pointer transition-all ${
+                className={`flex items-center justify-between text-xs py-1.5 px-2 rounded-lg cursor-pointer transition-all ${
                   isSelected ? 'bg-blue-50 border border-blue-200 font-bold' : 'hover:bg-slate-50'
                 }`}
               >
+                {/* Label & Indicator Dot on Right */}
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-3.5 h-3.5 rounded-md shadow-xs shrink-0"
+                    style={{ backgroundColor: seg.color }}
+                  />
+                  <span className="text-slate-800 font-bold whitespace-nowrap">
+                    {seg.label}
+                  </span>
+                </div>
+
                 {/* Count on Left */}
                 <span className="font-mono font-black text-slate-900 tabular-nums text-sm">
                   {seg.count}
                 </span>
-
-                {/* Label & Indicator Dot on Right */}
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-800 font-bold whitespace-nowrap">
-                    {seg.label}
-                  </span>
-                  <div
-                    className="w-3 h-3 rounded-md shadow-xs shrink-0"
-                    style={{ backgroundColor: seg.color }}
-                  />
-                </div>
               </div>
             );
           })}
